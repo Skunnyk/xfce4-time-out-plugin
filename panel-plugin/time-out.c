@@ -488,18 +488,19 @@ time_out_configure (XfcePanelPlugin *plugin,
 
   /* Create the labels for the minutes and seconds spins */
   label = gtk_label_new (_("Minutes"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_widget_set_valign (label, GTK_ALIGN_CENTER);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1, GTK_SHRINK, GTK_FILL, 1.0, 0.5);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Seconds"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_widget_set_valign (label, GTK_ALIGN_CENTER);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1, GTK_SHRINK, GTK_FILL, 1.0, 0.5);
   gtk_widget_show (label);
 
   /* Create break countdown time label */
   label = gtk_label_new (_("Time between breaks:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_widget_set_halign(label, GTK_ALIGN_END;)
+  gtk_widget_set_valign(label, GTK_ALIGN_CENTER);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_SHRINK, GTK_FILL, 1.0, 0.5);
   gtk_widget_show (label);
 
@@ -564,7 +565,7 @@ time_out_configure (XfcePanelPlugin *plugin,
   gtk_widget_show (framebox);
 
   /* Create behaviour box */
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (behaviourbin), vbox);
   gtk_widget_show (vbox);
 
@@ -589,7 +590,7 @@ time_out_configure (XfcePanelPlugin *plugin,
   gtk_widget_show (framebox);
 
   /* Create appearance box */
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (appearancebin), vbox);
   gtk_widget_show (vbox);
 
