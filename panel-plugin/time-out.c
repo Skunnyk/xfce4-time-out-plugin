@@ -200,13 +200,13 @@ time_out_new (XfcePanelPlugin *plugin)
   /* Create time out icon */
   time_out->panel_icon = gtk_image_new_from_icon_name ("xfce4-time-out-plugin", GTK_ICON_SIZE_DIALOG);
   gtk_image_set_pixel_size (GTK_IMAGE (time_out->panel_icon), xfce_panel_plugin_get_size (time_out->plugin) - 8);
-  gtk_box_pack_start (GTK_BOX (time_out->hvbox), time_out->panel_icon, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (gtk_dialog_get_content_area(GTK_DIALOG(time_out)))), time_out->panel_icon, TRUE, TRUE, 0);
   gtk_widget_show (time_out->panel_icon);
 
   /* Create label for displaying the remaining time until the next break */
   time_out->time_label = gtk_label_new ("Inactive");
   gtk_misc_set_alignment (GTK_MISC (time_out->time_label), 0.5, 0.5);
-  gtk_box_pack_start (GTK_BOX (time_out->hvbox), time_out->time_label, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (gtk_dialog_get_content_area(GTK_DIALOG(time_out)))), time_out->panel_icon, TRUE, TRUE, 0);
   gtk_widget_show (time_out->time_label);
 
   return time_out;
@@ -401,7 +401,7 @@ time_out_orientation_changed (XfcePanelPlugin *plugin,
   g_return_if_fail (time_out != NULL);
 
   /* Apply orientation to hvbox */
-  gtk_orientable_set_orientation(GTK_ORIENTABLE(global->box), orientation);
+  gtk_orientable_set_orientation(GTK_ORIENTABLE(time_out->hvbox), orientation);
 }
 
 static void
@@ -459,8 +459,8 @@ time_out_configure (XfcePanelPlugin *plugin,
   /* Create properties dialog */
   dialog = xfce_titled_dialog_new_with_buttons (_("Time Out"),
                                                 GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
-                                                GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_NO_SEPARATOR,
-                                                GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
+                                                GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                "gtk-close", GTK_RESPONSE_OK,
                                                 NULL);
 
   /* Set dialog property */
@@ -476,7 +476,7 @@ time_out_configure (XfcePanelPlugin *plugin,
   /* Create time settings section */
   framebox = xfce_gtk_frame_box_new (_("Time settings"), &timebin);
   gtk_container_set_border_width (GTK_CONTAINER (framebox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), framebox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (gtk_dialog_get_content_area(GTK_DIALOG(dialog)))), framebox, TRUE, TRUE, 0);
   gtk_widget_show (framebox);
 
   /* Create time settings table */
@@ -499,7 +499,7 @@ time_out_configure (XfcePanelPlugin *plugin,
 
   /* Create break countdown time label */
   label = gtk_label_new (_("Time between breaks:"));
-  gtk_widget_set_halign(label, GTK_ALIGN_END;)
+  gtk_widget_set_halign(label, GTK_ALIGN_END);
   gtk_widget_set_valign(label, GTK_ALIGN_CENTER);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_SHRINK, GTK_FILL, 1.0, 0.5);
   gtk_widget_show (label);
@@ -561,7 +561,7 @@ time_out_configure (XfcePanelPlugin *plugin,
   /* Create behaviour section */
   framebox = xfce_gtk_frame_box_new (_("Behaviour"), &behaviourbin);
   gtk_container_set_border_width (GTK_CONTAINER (framebox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), framebox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (gtk_dialog_get_content_area(GTK_DIALOG(dialog)))), framebox, TRUE, TRUE, 0);
   gtk_widget_show (framebox);
 
   /* Create behaviour box */
@@ -586,7 +586,7 @@ time_out_configure (XfcePanelPlugin *plugin,
   /* Create appearance section */
   framebox = xfce_gtk_frame_box_new (_("Appearance"), &appearancebin);
   gtk_container_set_border_width (GTK_CONTAINER (framebox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), framebox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (gtk_dialog_get_content_area(GTK_DIALOG(dialog)))), framebox, TRUE, TRUE, 0);
   gtk_widget_show (framebox);
 
   /* Create appearance box */
